@@ -1,57 +1,17 @@
-let movies = [
-  {
-    id: 1570004517340,
-    title: 'Matrix',
-    score: 10,
-  },
-  {
-    id: 1570004517341,
-    title: 'Avengers',
-    score: 10,
-  },
-  {
-    id: 1570004517342,
-    title: 'IronMan',
-    score: 9,
-  },
-  {
-    id: 1570004517343,
-    title: 'DoubleTarget',
-    score: 7,
-  },
-  {
-    id: 15700045173405,
-    title: 'Kindom',
-    score: 8,
-  },
-];
+import { fetchMovies } from '../api/index.js';
 
-const getMovies = () => movies;
-
-const getById = id => {
-  const filterMovies = movies.filter(movie => id === movie.id);
-  return filterMovies[0];
-};
-
-const addMovie = (title, score) => {
-  const id = parseFloat(new Date().getTime(), 10);
-  const newMovie = {
-    id,
-    title,
-    score,
-  };
-  movies.push(newMovie);
-  return newMovie;
-};
-
-const deleteMovie = id => {
-  const cleanedMovies = movies.filter(movie => movie.id !== id);
-  if (movies.length > cleanedMovies.length) {
-    movies = cleanedMovies;
-    return true;
-  } else {
-    return false;
+export const getMovies = async (limit, rating) => {
+  try {
+    let query = '';
+    if (limit !== undefined && limit > 0) {
+      query += `?limit=${limit}`;
+    }
+    if (rating !== undefined && rating > 0) {
+      query += `&minimum_rating=${rating}`;
+    }
+    const { data } = await fetchMovies(query);
+    return data.data.movies;
+  } catch (err) {
+    console.log(err);
   }
 };
-
-export { getMovies, getById, addMovie, deleteMovie };
