@@ -1,39 +1,57 @@
-const people = [
+let movies = [
   {
-    id: 0,
-    name: 'Mark',
-    age: 34,
-    gender: 'female',
+    id: 1570004517340,
+    title: 'Matrix',
+    score: 10,
   },
   {
-    id: 1,
-    name: 'Anny',
-    age: 24,
-    gender: 'male',
+    id: 1570004517341,
+    title: 'Avengers',
+    score: 10,
   },
   {
-    id: 2,
-    name: 'Michel',
-    age: 25,
-    gender: 'female',
+    id: 1570004517342,
+    title: 'IronMan',
+    score: 9,
   },
   {
-    id: 3,
-    name: 'Herry',
-    age: 54,
-    gender: 'female',
+    id: 1570004517343,
+    title: 'DoubleTarget',
+    score: 7,
   },
   {
-    id: 4,
-    name: 'Anna',
-    age: 34,
-    gender: 'male',
+    id: 15700045173405,
+    title: 'Kindom',
+    score: 8,
   },
 ];
 
+const getMovies = () => movies;
+
 const getById = id => {
-  const filterPeople = people.filter(person => id === person.id);
-  return filterPeople[0];
+  const filterMovies = movies.filter(movie => id === movie.id);
+  return filterMovies[0];
 };
 
-export { people, getById };
+const addMovie = (title, score) => {
+  const id = parseFloat(new Date().getTime(), 10);
+  const newMovie = {
+    id,
+    title,
+    score,
+  };
+  movies.push(newMovie);
+  return newMovie;
+};
+
+const deleteMovie = id => {
+  const cleanedMovies = movies.filter(movie => movie.id !== id);
+  if (movies.length > cleanedMovies.length) {
+    movies = cleanedMovies;
+    return true;
+  } else {
+    return false;
+  }
+};
+
+export { getMovies, getById, addMovie, deleteMovie };
